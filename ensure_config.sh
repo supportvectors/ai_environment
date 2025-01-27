@@ -100,7 +100,7 @@ fi
 
 #-----------------------------------------------------------------------------------------
 # Download and create the docs folder, for mkdocs later.
-curl -sSL http://sapphire/internal/docs.tgz | tar -xvzf -
+tar -xvzf docs.tgz
 
 #-----------------------------------------------------------------------------------------
 
