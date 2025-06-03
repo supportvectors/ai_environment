@@ -118,6 +118,17 @@ fi
 tar -xvzf docs.tgz
 
 #-----------------------------------------------------------------------------------------
+# Clean up any existing main.py file
+echo "Checking for existing main.py file..."
+if [[ -f "main.py" ]]; then
+    echo "Found main.py in project directory. Removing it..."
+    rm main.py
+    echo "main.py removed successfully."
+else
+    echo "No main.py found in project directory."
+fi
+
+#-----------------------------------------------------------------------------------------
 
 
 # Prompt user for project details
@@ -298,8 +309,13 @@ if [[ ! -f "mkdocs.yml" ]]; then
     # Update pyproject.toml with project description
     echo "Adding project description to pyproject.toml..."
     
-    # Check if [project] section exists, if not create it
-    if ! grep -q "\[project\]" pyproject.toml; then
+    # Check if there's a placeholder description to replace
+    if grep -q 'description = "Add your description here"' pyproject.toml; then
+        # Replace the placeholder with the actual description
+        sed -i '' 's/description = "Add your description here"/description = "'"$project_description"'"/' pyproject.toml
+        echo "Placeholder description replaced with actual project description in pyproject.toml."
+    elif ! grep -q "\[project\]" pyproject.toml; then
+        # No [project] section exists, create it with description
         cat >> pyproject.toml << EOF
 
 [project]
@@ -431,16 +447,9 @@ fi
 
 source .env
 echo ".env sourced"
-uv add svlearn-core
-echo "Adding the svlearn-core dependency"
-uv add torch datasets
-echo "Adding PyTorch and datasets to the project"
-uv add matplotlib
-echo "Adding matplotlib to the project"
-uv add pandas
-echo "Adding pandas to the project"
-uv add scikit-learn
-echo "Adding scikit-learn to the project"
+uv add svlearn-bootcamp
+echo "Adding the svlearn-bootcamp dependency"
+
 echo "==============================================================="
 echo "Building the project...."
 echo "==============================================================="
@@ -448,6 +457,17 @@ uv build
 
 echo "Running environment setup test to verify everything is working..."
 uv run src/test_setup.py
+
+#-----------------------------------------------------------------------------------------
+# Clean up the docs archive file
+echo "Cleaning up installation files..."
+if [[ -f "docs.tgz" ]]; then
+    echo "Removing docs.tgz archive file..."
+    rm docs.tgz
+    echo "docs.tgz removed successfully."
+else
+    echo "docs.tgz not found (may have been removed already)."
+fi
 
 echo "************ SETUP COMPLETE ***********************************"
 
