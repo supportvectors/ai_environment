@@ -94,6 +94,12 @@ if [[ ! -f .env ]]; then
 export BOOTCAMP_ROOT_DIR="$current_dir"
 
 #
+# Project's Python executable path
+# Points to the virtual environment's Python interpreter
+#
+export PROJECT_PYTHON="$current_dir/.venv/bin/python"
+
+#
 # Precaution, needed for some IDEs
 # to recognize that the main svlearn library code
 # is in the src/ sub-directory
@@ -217,6 +223,17 @@ def main():
     # Test PYTHONPATH
     pythonpath = os.environ.get('PYTHONPATH', 'Not set')
     print(f"✅ PYTHONPATH: {pythonpath}")
+    
+    # Test PROJECT_PYTHON
+    project_python = os.environ.get('PROJECT_PYTHON', 'Not set')
+    print(f"✅ PROJECT_PYTHON: {project_python}")
+    
+    # Verify the Python executable exists
+    if project_python != 'Not set':
+        if os.path.exists(project_python):
+            print(f"✅ Project Python executable found at: {project_python}")
+        else:
+            print(f"⚠️  Project Python executable not found at: {project_python}")
     
     # Test that we can import our module
     try:
