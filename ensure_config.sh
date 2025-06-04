@@ -477,6 +477,14 @@ echo "************ SETUP COMPLETE ***********************************"
 
 # Finally, activate the environments
 
+#-----------------------------------------------------------------------------------------
+# Self-cleanup: Delete this setup script
+echo ""
+echo "Setup script has completed its purpose."
+echo "Removing setup script..."
+rm -- "$0"
+echo "Setup script removed. Your project is ready!"
+
 exit
 
 
