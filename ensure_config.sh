@@ -105,6 +105,10 @@ export PROJECT_PYTHON="$current_dir/.venv/bin/python"
 # is in the src/ sub-directory
 #
 export PYTHONPATH="$current_dir/src"
+
+# The OpenAI Key (Replace with your own key)
+export OPENAI_API_KEY=<your-openai-key>
+
 EOF
 
     echo ".env file created with BOOTCAMP_ROOT_DIR set to $current_dir"
